@@ -1,0 +1,5 @@
+{
+  "name": "HoopTrack AI",
+  "description": "Real-time basketball shot tracking and performance analytics using AI-powered camera vision.",
+  "requestFramePermissions": ["camera"]
+}

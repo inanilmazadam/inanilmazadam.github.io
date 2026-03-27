@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile and settings.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Session": {
+      "title": "Shooting Session",
+      "description": "A single shooting session (e.g., 3pt, midrange).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["3pt", "freethrow", "floater", "layup", "midrange"] },
+        "totalShots": { "type": "integer" },
+        "madeShots": { "type": "integer" },
+        "accuracy": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "type", "timestamp"]
+    },
+    "Shot": {
+      "title": "Individual Shot",
+      "description": "A single shot recorded during a session.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "isMade": { "type": "boolean" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          }
+        },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "sessionId", "userId", "isMade", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "Shooting session documents."
+    },
+    "/sessions/{sessionId}/shots/{shotId}": {
+      "schema": "Shot",
+      "description": "Individual shot documents within a session."
+    }
+  }
+}
